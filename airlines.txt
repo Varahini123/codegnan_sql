@@ -1,0 +1,462 @@
+mysql> 
+mysql> -- CREATE DATABASE
+mysql> 
+mysql> CREATE DATABASE AirlineDB;
+ERROR 1007 (HY000): Can't create database 'airlinedb'; database exists
+mysql> USE AirlineDB;
+Database changed
+mysql> 
+mysql> 
+mysql> -- TABLE: Passengers
+mysql> 
+mysql> CREATE TABLE Passengers (
+    ->     passenger_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     passenger_name VARCHAR(100),
+    ->     passport_no VARCHAR(50)
+    -> );
+ERROR 1050 (42S01): Table 'passengers' already exists
+mysql> 
+mysql> 
+mysql> -- TABLE: Flights
+mysql> 
+mysql> CREATE TABLE Flights (
+    ->     flight_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     flight_name VARCHAR(100),
+    ->     source VARCHAR(50),
+    ->     destination VARCHAR(50)
+    -> );
+ERROR 1050 (42S01): Table 'flights' already exists
+mysql> 
+mysql> 
+mysql> -- TABLE: Pilots
+mysql> 
+mysql> CREATE TABLE Pilots (
+    ->     pilot_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     pilot_name VARCHAR(100),
+    ->     experience_years INT
+    -> );
+ERROR 1050 (42S01): Table 'pilots' already exists
+mysql> 
+mysql> 
+mysql> -- TABLE: Reservations
+mysql> 
+mysql> CREATE TABLE Reservations (
+    ->     reservation_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     passenger_id INT,
+    ->     flight_id INT,
+    ->     pilot_id INT,
+    ->     journey_date DATE,
+    -> 
+    ->     FOREIGN KEY (passenger_id) REFERENCES Passengers(passenger_id),
+    ->     FOREIGN KEY (flight_id) REFERENCES Flights(flight_id),
+    ->     FOREIGN KEY (pilot_id) REFERENCES Pilots(pilot_id)
+    -> );
+ERROR 1050 (42S01): Table 'reservations' already exists
+mysql> 
+mysql> 
+mysql> -- INSERT DATA: Passengers
+mysql> 
+mysql> INSERT INTO Passengers (passenger_name, passport_no) VALUES
+    -> ('Aarav Sharma', 'INP1001'),
+    -> ('Diya Reddy', 'INP1002'),
+    -> ('Karan Mehta', 'INP1003'),
+    -> ('Sneha Iyer', 'INP1004'),
+    -> ('Rohan Gupta', 'INP1005'),
+    -> ('Ananya Nair', 'INP1006'),
+    -> ('Vikram Singh', 'INP1007'),
+    -> ('Pooja Verma', 'INP1008');
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> 
+mysql> -- INSERT DATA: Flights
+mysql> 
+mysql> INSERT INTO Flights (flight_name, source, destination) VALUES
+    -> ('IndiGo 6E101', 'Hyderabad', 'Delhi'),
+    -> ('Air India AI202', 'Chennai', 'Mumbai'),
+    -> ('SpiceJet SG303', 'Bangalore', 'Kolkata'),
+    -> ('Vistara UK404', 'Delhi', 'Pune'),
+    -> ('IndiGo 6E505', 'Mumbai', 'Goa'),
+    -> ('AirAsia I606', 'Hyderabad', 'Bangalore'),
+    -> ('GoFirst G707', 'Kochi', 'Delhi'),
+    -> ('Vistara UK808', 'Ahmedabad', 'Chennai');
+Query OK, 8 rows affected (0.00 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> 
+mysql> -- INSERT DATA: Pilots
+mysql> 
+mysql> INSERT INTO Pilots (pilot_name, experience_years) VALUES
+    -> ('Captain Raj Malhotra', 12),
+    -> ('Captain Amit Joshi', 8),
+    -> ('Captain Neha Kapoor', 10),
+    -> ('Captain Suresh Kumar', 15),
+    -> ('Captain Rakesh Yadav', 6),
+    -> ('Captain Meera Shah', 9),
+    -> ('Captain Arjun Desai', 11),
+    -> ('Captain Priya Menon', 7);
+Query OK, 8 rows affected (0.00 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> 
+mysql> -- INSERT DATA: Reservations
+mysql> 
+mysql> INSERT INTO Reservations (passenger_id, flight_id, pilot_id, journey_date) VALUES
+    -> (1, 1, 1, '2026-05-18'),
+    -> (2, 2, 2, '2026-05-19'),
+    -> (3, 3, 3, '2026-05-20'),
+    -> (4, 4, 4, '2026-05-21'),
+    -> (5, 5, 5, '2026-05-22'),
+    -> (6, 6, 6, '2026-05-23'),
+    -> (7, 7, 7, '2026-05-24'),
+    -> (8, 8, 8, '2026-05-25');
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> SHOW TABLE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SHOW TABLE
+    -> ^C
+mysql> SELECT * FROM PILOTS;
++----------+----------------------+------------------+
+| pilot_id | pilot_name           | experience_years |
++----------+----------------------+------------------+
+|        1 | Captain Raj Malhotra |               12 |
+|        2 | Captain Amit Joshi   |                8 |
+|        3 | Captain Neha Kapoor  |               10 |
+|        4 | Captain Suresh Kumar |               15 |
+|        5 | Captain Rakesh Yadav |                6 |
+|        6 | Captain Meera Shah   |                9 |
+|        7 | Captain Arjun Desai  |               11 |
+|        8 | Captain Priya Menon  |                7 |
+|        9 | Captain Raj Malhotra |               12 |
+|       10 | Captain Amit Joshi   |                8 |
+|       11 | Captain Neha Kapoor  |               10 |
+|       12 | Captain Suresh Kumar |               15 |
+|       13 | Captain Rakesh Yadav |                6 |
+|       14 | Captain Meera Shah   |                9 |
+|       15 | Captain Arjun Desai  |               11 |
+|       16 | Captain Priya Menon  |                7 |
++----------+----------------------+------------------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT * FROM FLIGHTS;
++-----------+-----------------+-----------+-------------+
+| flight_id | flight_name     | source    | destination |
++-----------+-----------------+-----------+-------------+
+|         1 | IndiGo 6E101    | Hyderabad | Delhi       |
+|         2 | Air India AI202 | Chennai   | Mumbai      |
+|         3 | SpiceJet SG303  | Bangalore | Kolkata     |
+|         4 | Vistara UK404   | Delhi     | Pune        |
+|         5 | IndiGo 6E505    | Mumbai    | Goa         |
+|         6 | AirAsia I606    | Hyderabad | Bangalore   |
+|         7 | GoFirst G707    | Kochi     | Delhi       |
+|         8 | Vistara UK808   | Ahmedabad | Chennai     |
+|         9 | IndiGo 6E101    | Hyderabad | Delhi       |
+|        10 | Air India AI202 | Chennai   | Mumbai      |
+|        11 | SpiceJet SG303  | Bangalore | Kolkata     |
+|        12 | Vistara UK404   | Delhi     | Pune        |
+|        13 | IndiGo 6E505    | Mumbai    | Goa         |
+|        14 | AirAsia I606    | Hyderabad | Bangalore   |
+|        15 | GoFirst G707    | Kochi     | Delhi       |
+|        16 | Vistara UK808   | Ahmedabad | Chennai     |
++-----------+-----------------+-----------+-------------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PASSENGERS;
++--------------+----------------+-------------+
+| passenger_id | passenger_name | passport_no |
++--------------+----------------+-------------+
+|            1 | Aarav Sharma   | INP1001     |
+|            2 | Diya Reddy     | INP1002     |
+|            3 | Karan Mehta    | INP1003     |
+|            4 | Sneha Iyer     | INP1004     |
+|            5 | Rohan Gupta    | INP1005     |
+|            6 | Ananya Nair    | INP1006     |
+|            7 | Vikram Singh   | INP1007     |
+|            8 | Pooja Verma    | INP1008     |
+|            9 | Aarav Sharma   | INP1001     |
+|           10 | Diya Reddy     | INP1002     |
+|           11 | Karan Mehta    | INP1003     |
+|           12 | Sneha Iyer     | INP1004     |
+|           13 | Rohan Gupta    | INP1005     |
+|           14 | Ananya Nair    | INP1006     |
+|           15 | Vikram Singh   | INP1007     |
+|           16 | Pooja Verma    | INP1008     |
++--------------+----------------+-------------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT * FROM RESERVATIONS;
++----------------+--------------+-----------+----------+--------------+
+| reservation_id | passenger_id | flight_id | pilot_id | journey_date |
++----------------+--------------+-----------+----------+--------------+
+|              1 |            1 |         1 |        1 | 2026-05-18   |
+|              2 |            2 |         2 |        2 | 2026-05-19   |
+|              3 |            3 |         3 |        3 | 2026-05-20   |
+|              4 |            4 |         4 |        4 | 2026-05-21   |
+|              5 |            5 |         5 |        5 | 2026-05-22   |
+|              6 |            6 |         6 |        6 | 2026-05-23   |
+|              7 |            7 |         7 |        7 | 2026-05-24   |
+|              8 |            8 |         8 |        8 | 2026-05-25   |
+|              9 |            1 |         1 |        1 | 2026-05-18   |
+|             10 |            2 |         2 |        2 | 2026-05-19   |
+|             11 |            3 |         3 |        3 | 2026-05-20   |
+|             12 |            4 |         4 |        4 | 2026-05-21   |
+|             13 |            5 |         5 |        5 | 2026-05-22   |
+|             14 |            6 |         6 |        6 | 2026-05-23   |
+|             15 |            7 |         7 |        7 | 2026-05-24   |
+|             16 |            8 |         8 |        8 | 2026-05-25   |
++----------------+--------------+-----------+----------+--------------+
+16 rows in set (0.00 sec)
+
+mysql> -- 1. Display all passengers with passport numbers
+mysql> SELECT 
+    ->     passenger_name,
+    ->     passport_no
+    -> FROM Passengers;
++----------------+-------------+
+| passenger_name | passport_no |
++----------------+-------------+
+| Aarav Sharma   | INP1001     |
+| Diya Reddy     | INP1002     |
+| Karan Mehta    | INP1003     |
+| Sneha Iyer     | INP1004     |
+| Rohan Gupta    | INP1005     |
+| Ananya Nair    | INP1006     |
+| Vikram Singh   | INP1007     |
+| Pooja Verma    | INP1008     |
+| Aarav Sharma   | INP1001     |
+| Diya Reddy     | INP1002     |
+| Karan Mehta    | INP1003     |
+| Sneha Iyer     | INP1004     |
+| Rohan Gupta    | INP1005     |
+| Ananya Nair    | INP1006     |
+| Vikram Singh   | INP1007     |
+| Pooja Verma    | INP1008     |
++----------------+-------------+
+16 rows in set (0.00 sec)
+
+mysql> -- 2. Show flights where source is not 'Delhi'
+mysql> SELECT *
+    -> FROM Flights
+    -> WHERE source <> 'Delhi';
++-----------+-----------------+-----------+-------------+
+| flight_id | flight_name     | source    | destination |
++-----------+-----------------+-----------+-------------+
+|         1 | IndiGo 6E101    | Hyderabad | Delhi       |
+|         2 | Air India AI202 | Chennai   | Mumbai      |
+|         3 | SpiceJet SG303  | Bangalore | Kolkata     |
+|         5 | IndiGo 6E505    | Mumbai    | Goa         |
+|         6 | AirAsia I606    | Hyderabad | Bangalore   |
+|         7 | GoFirst G707    | Kochi     | Delhi       |
+|         8 | Vistara UK808   | Ahmedabad | Chennai     |
+|         9 | IndiGo 6E101    | Hyderabad | Delhi       |
+|        10 | Air India AI202 | Chennai   | Mumbai      |
+|        11 | SpiceJet SG303  | Bangalore | Kolkata     |
+|        13 | IndiGo 6E505    | Mumbai    | Goa         |
+|        14 | AirAsia I606    | Hyderabad | Bangalore   |
+|        15 | GoFirst G707    | Kochi     | Delhi       |
+|        16 | Vistara UK808   | Ahmedabad | Chennai     |
++-----------+-----------------+-----------+-------------+
+14 rows in set (0.00 sec)
+
+mysql> -- 3. Display pilots with experience greater than 8 years
+mysql> SELECT 
+    ->     pilot_name,
+    ->     experience_years
+    -> FROM Pilots
+    -> WHERE experience_years > 8;
++----------------------+------------------+
+| pilot_name           | experience_years |
++----------------------+------------------+
+| Captain Raj Malhotra |               12 |
+| Captain Neha Kapoor  |               10 |
+| Captain Suresh Kumar |               15 |
+| Captain Meera Shah   |                9 |
+| Captain Arjun Desai  |               11 |
+| Captain Raj Malhotra |               12 |
+| Captain Neha Kapoor  |               10 |
+| Captain Suresh Kumar |               15 |
+| Captain Meera Shah   |                9 |
+| Captain Arjun Desai  |               11 |
++----------------------+------------------+
+10 rows in set (0.00 sec)
+
+mysql> -- 4. Show reservations after a specific date
+mysql> SELECT *
+    -> FROM Reservations
+    -> WHERE journey_date > '2026-05-21';
++----------------+--------------+-----------+----------+--------------+
+| reservation_id | passenger_id | flight_id | pilot_id | journey_date |
++----------------+--------------+-----------+----------+--------------+
+|              5 |            5 |         5 |        5 | 2026-05-22   |
+|              6 |            6 |         6 |        6 | 2026-05-23   |
+|              7 |            7 |         7 |        7 | 2026-05-24   |
+|              8 |            8 |         8 |        8 | 2026-05-25   |
+|             13 |            5 |         5 |        5 | 2026-05-22   |
+|             14 |            6 |         6 |        6 | 2026-05-23   |
+|             15 |            7 |         7 |        7 | 2026-05-24   |
+|             16 |            8 |         8 |        8 | 2026-05-25   |
++----------------+--------------+-----------+----------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> -- 5. Find total number of passengers
+mysql> SELECT COUNT(*) AS total_passengers
+    -> FROM Passengers;
++------------------+
+| total_passengers |
++------------------+
+|               16 |
++------------------+
+1 row in set (0.01 sec)
+
+mysql> -- 6. Find average pilot experience
+mysql> SELECT AVG(experience_years) AS average_experience
+    -> FROM Pilots;
++--------------------+
+| average_experience |
++--------------------+
+|             9.7500 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> -- 7. Count number of flights from each source city
+mysql> SELECT source, COUNT(*) AS total_flights
+    -> FROM Flights
+    -> GROUP BY source;
++-----------+---------------+
+| source    | total_flights |
++-----------+---------------+
+| Hyderabad |             4 |
+| Chennai   |             2 |
+| Bangalore |             2 |
+| Delhi     |             2 |
+| Mumbai    |             2 |
+| Kochi     |             2 |
+| Ahmedabad |             2 |
++-----------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> -- 8. Find maximum and minimum pilot experience
+mysql> SELECT 
+    ->     MAX(experience_years) AS max_experience,
+    ->     MIN(experience_years) AS min_experience
+    -> FROM Pilots;
++----------------+----------------+
+| max_experience | min_experience |
++----------------+----------------+
+|             15 |              6 |
++----------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> -- 9. Display passenger name with flight details
+mysql> SELECT 
+    ->     p.passenger_name,
+    ->     f.flight_name,
+    ->     r.journey_date
+    -> FROM Reservations r
+    -> JOIN Passengers p ON r.passenger_id = p.passenger_id
+    -> JOIN Flights f ON r.flight_id = f.flight_id;
++----------------+-----------------+--------------+
+| passenger_name | flight_name     | journey_date |
++----------------+-----------------+--------------+
+| Aarav Sharma   | IndiGo 6E101    | 2026-05-18   |
+| Diya Reddy     | Air India AI202 | 2026-05-19   |
+| Karan Mehta    | SpiceJet SG303  | 2026-05-20   |
+| Sneha Iyer     | Vistara UK404   | 2026-05-21   |
+| Rohan Gupta    | IndiGo 6E505    | 2026-05-22   |
+| Ananya Nair    | AirAsia I606    | 2026-05-23   |
+| Vikram Singh   | GoFirst G707    | 2026-05-24   |
+| Pooja Verma    | Vistara UK808   | 2026-05-25   |
+| Aarav Sharma   | IndiGo 6E101    | 2026-05-18   |
+| Diya Reddy     | Air India AI202 | 2026-05-19   |
+| Karan Mehta    | SpiceJet SG303  | 2026-05-20   |
+| Sneha Iyer     | Vistara UK404   | 2026-05-21   |
+| Rohan Gupta    | IndiGo 6E505    | 2026-05-22   |
+| Ananya Nair    | AirAsia I606    | 2026-05-23   |
+| Vikram Singh   | GoFirst G707    | 2026-05-24   |
+| Pooja Verma    | Vistara UK808   | 2026-05-25   |
++----------------+-----------------+--------------+
+16 rows in set (0.00 sec)
+
+mysql> -- 10. Show total reservations per flight
+mysql> SELECT 
+    ->     f.flight_name,
+    ->     COUNT(r.reservation_id) AS total_reservations
+    -> FROM Flights f
+    -> JOIN Reservations r ON f.flight_id = r.flight_id
+    -> GROUP BY f.flight_name
+    -> ORDER BY total_reservations DESC;
++-----------------+--------------------+
+| flight_name     | total_reservations |
++-----------------+--------------------+
+| IndiGo 6E101    |                  2 |
+| Air India AI202 |                  2 |
+| SpiceJet SG303  |                  2 |
+| Vistara UK404   |                  2 |
+| IndiGo 6E505    |                  2 |
+| AirAsia I606    |                  2 |
+| GoFirst G707    |                  2 |
+| Vistara UK808   |                  2 |
++-----------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql> -- 11. Show pilots who handled more than 1 reservation
+mysql> SELECT 
+    ->     pi.pilot_name,
+    ->     COUNT(r.reservation_id) AS total_reservations
+    -> FROM Pilots pi
+    -> JOIN Reservations r ON pi.pilot_id = r.pilot_id
+    -> GROUP BY pi.pilot_name
+    -> HAVING COUNT(r.reservation_id) > 1;
++----------------------+--------------------+
+| pilot_name           | total_reservations |
++----------------------+--------------------+
+| Captain Raj Malhotra |                  2 |
+| Captain Amit Joshi   |                  2 |
+| Captain Neha Kapoor  |                  2 |
+| Captain Suresh Kumar |                  2 |
+| Captain Rakesh Yadav |                  2 |
+| Captain Meera Shah   |                  2 |
+| Captain Arjun Desai  |                  2 |
+| Captain Priya Menon  |                  2 |
++----------------------+--------------------+
+8 rows in set (0.00 sec)
+
+mysql> -- 12. Display full reservation details ordered by date
+mysql> SELECT 
+    ->     r.reservation_id,
+    ->     p.passenger_name,
+    ->     f.flight_name,
+    ->     pi.pilot_name,
+    ->     r.journey_date
+    -> FROM Reservations r
+    -> JOIN Passengers p ON r.passenger_id = p.passenger_id
+    -> JOIN Flights f ON r.flight_id = f.flight_id
+    -> JOIN Pilots pi ON r.pilot_id = pi.pilot_id
+    -> ORDER BY r.journey_date ASC;
++----------------+----------------+-----------------+----------------------+--------------+
+| reservation_id | passenger_name | flight_name     | pilot_name           | journey_date |
++----------------+----------------+-----------------+----------------------+--------------+
+|              1 | Aarav Sharma   | IndiGo 6E101    | Captain Raj Malhotra | 2026-05-18   |
+|              9 | Aarav Sharma   | IndiGo 6E101    | Captain Raj Malhotra | 2026-05-18   |
+|              2 | Diya Reddy     | Air India AI202 | Captain Amit Joshi   | 2026-05-19   |
+|             10 | Diya Reddy     | Air India AI202 | Captain Amit Joshi   | 2026-05-19   |
+|              3 | Karan Mehta    | SpiceJet SG303  | Captain Neha Kapoor  | 2026-05-20   |
+|             11 | Karan Mehta    | SpiceJet SG303  | Captain Neha Kapoor  | 2026-05-20   |
+|              4 | Sneha Iyer     | Vistara UK404   | Captain Suresh Kumar | 2026-05-21   |
+|             12 | Sneha Iyer     | Vistara UK404   | Captain Suresh Kumar | 2026-05-21   |
+|              5 | Rohan Gupta    | IndiGo 6E505    | Captain Rakesh Yadav | 2026-05-22   |
+|             13 | Rohan Gupta    | IndiGo 6E505    | Captain Rakesh Yadav | 2026-05-22   |
+|              6 | Ananya Nair    | AirAsia I606    | Captain Meera Shah   | 2026-05-23   |
+|             14 | Ananya Nair    | AirAsia I606    | Captain Meera Shah   | 2026-05-23   |
+|              7 | Vikram Singh   | GoFirst G707    | Captain Arjun Desai  | 2026-05-24   |
+|             15 | Vikram Singh   | GoFirst G707    | Captain Arjun Desai  | 2026-05-24   |
+|              8 | Pooja Verma    | Vistara UK808   | Captain Priya Menon  | 2026-05-25   |
+|             16 | Pooja Verma    | Vistara UK808   | Captain Priya Menon  | 2026-05-25   |
++----------------+----------------+-----------------+----------------------+--------------+
+16 rows in set (0.00 sec)
+
