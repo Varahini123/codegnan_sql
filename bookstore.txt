@@ -77,9 +77,9 @@ mysql> CREATE TABLE Order_Details (
 Query OK, 0 rows affected (0.03 sec)
 
 mysql> 
-mysql> -- =========================
+mysql> -- inserting values
 mysql> -- INSERT AUTHORS
-mysql> -- =========================
+mysql> -- ---------------------
 mysql> INSERT INTO Authors (author_name, bio) VALUES
     -> ('Chetan Bhagat', 'Indian author known for 5 Point Someone.'),
     -> ('Arundhati Roy', 'Winner of the Man Booker Prize.'),
@@ -93,9 +93,9 @@ Query OK, 8 rows affected (0.01 sec)
 Records: 8  Duplicates: 0  Warnings: 0
 
 mysql> 
-mysql> -- =========================
+mysql> -- inserting genres
 mysql> -- INSERT GENRES
-mysql> -- =========================
+mysql> -- ---------------------------
 mysql> INSERT INTO Genres (genre_name) VALUES
     -> ('Fiction'),
     -> ('Mythology'),
@@ -109,9 +109,9 @@ Query OK, 8 rows affected (0.00 sec)
 Records: 8  Duplicates: 0  Warnings: 0
 
 mysql> 
-mysql> -- =========================
+mysql> -- inserting customers
 mysql> -- INSERT CUSTOMERS
-mysql> -- =========================
+mysql> -- ------------------------------
 mysql> INSERT INTO Customers
     -> (name, email, city, join_date)
     -> VALUES
@@ -127,9 +127,9 @@ Query OK, 8 rows affected (0.00 sec)
 Records: 8  Duplicates: 0  Warnings: 0
 
 mysql> 
-mysql> -- =========================
+mysql> -- inserting books
 mysql> -- INSERT BOOKS
-mysql> -- =========================
+mysql> -- --------------------------------
 mysql> INSERT INTO Books
     -> (title, price, stock_quantity, author_id, genre_id)
     -> VALUES
@@ -146,9 +146,9 @@ Query OK, 9 rows affected (0.01 sec)
 Records: 9  Duplicates: 0  Warnings: 0
 
 mysql> 
-mysql> -- =========================
+mysql> -- inserting orders
 mysql> -- INSERT ORDERS
-mysql> -- =========================
+mysql> -- ------------------------------
 mysql> INSERT INTO Orders
     -> (order_date, customer_id)
     -> VALUES
@@ -164,9 +164,9 @@ Query OK, 8 rows affected (0.01 sec)
 Records: 8  Duplicates: 0  Warnings: 0
 
 mysql> 
-mysql> -- =========================
+mysql> -- inserting order details
 mysql> -- INSERT ORDER DETAILS
-mysql> -- =========================
+mysql> -- -----------------------------
 mysql> INSERT INTO Order_Details
     -> (order_id, book_id, quantity_ordered, price_at_time_of_order)
     -> VALUES
@@ -183,9 +183,9 @@ Query OK, 9 rows affected (0.01 sec)
 Records: 9  Duplicates: 0  Warnings: 0
 
 mysql> 
-mysql> -- =========================
+mysql> -- displaying
 mysql> -- DISPLAY TABLES
-mysql> -- =========================
+mysql> -- -----------------------------
 mysql> SELECT * FROM Authors;
 +-----------+-------------------+-------------------------------------------+
 | author_id | author_name       | bio                                       |
